@@ -3,7 +3,7 @@ from pymongo import MongoClient, ASCENDING
 from string import StringUtil
 
 
-class MongoDBUtil(object):
+class MongoDBUtil:
     def __init__(self, mongo_url, db_name, collection_name, auto_connect=False):
         """
         :param mongo_url: host, port, username, password, auth db

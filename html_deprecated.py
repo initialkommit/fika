@@ -6,7 +6,7 @@ import lxml.html
 from string import StringUtil
 
 
-class HtmlUtil(object):
+class HtmlUtil:
     @staticmethod
     def remove_tags_in_html(html):
         return re.sub(r'<[a-zA-Z/][^>]*>',
@@ -27,6 +27,7 @@ class HtmlUtil(object):
     def remove_javascripts_in_doc(doc):
         for element in doc.iter("script"):
             element.drop_tree()
+
         return doc
 
     @staticmethod
@@ -34,7 +35,7 @@ class HtmlUtil(object):
         for p in css_pattern_list:  # remove unnecessary links
             for e in doc.select(p):
                 if len(remove_string_list) > 0:
-                    if e.text is not None:
+                    if e.text:
                         for string in remove_string_list:
                             if string in e.text:
                                 e.extract()
@@ -45,14 +46,11 @@ class HtmlUtil(object):
     # noinspection PyUnresolvedReferences
     @staticmethod
     def trim(html, prefix_url=None):
-        """
-        코멘트 제거, 자바스크립트 제거 (100.daum.net 제외)
+        """코멘트 제거, 자바스크립트 제거 (100.daum.net 제외)
+
         \r\n -> \n
         html에 포함된 <br>, <p>를 \n 으로 변환
         다수의 공백, \t, \n 을 하나로 합침
-        :param html:
-        :param prefix_url:
-        :return:
         """
         html = html.replace('\r\n', '\n')
         convert_dic = {

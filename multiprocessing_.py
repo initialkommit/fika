@@ -5,6 +5,7 @@ from multiprocessing.queues import Queue, JoinableQueue
 
 class CountableQueue(Queue):
     """A portable implementation of multiprocessing.Queue
+
     Counter를 이용해 Queue의 요소를 셀 수 있도록 한다.
     """
 
@@ -31,6 +32,7 @@ class CountableQueue(Queue):
 
 class CountableJoinableQueue(JoinableQueue):
     """A portable implementation of multiprocessing.JoinableQueue
+
     Counter를 이용해 Queue의 요소를 셀 수 있도록 한다.
     """
 

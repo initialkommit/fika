@@ -37,7 +37,6 @@ class PostgresUtil:
     def connect(self):
         params = self.config()
 
-        # log.info('Connecting to the PostgreSQL database - %s' % self.section)
         self.conn = psycopg2.connect(**params)
         self.conn.autocommit = self.autocommit
         self.cursor = self.conn.cursor(cursor_factory=RealDictCursor)
@@ -55,10 +54,10 @@ class PostgresUtil:
 
     def execute_many(self, query, *args, **kwargs):
         """
-        example)
-        namedict = ({"first_name":"Joshua", "last_name":"Drake"},
-                    {"first_name":"Steven", "last_name":"Foo"},
-                    {"first_name":"David", "last_name":"Bar"})
+        Example:
+            namedict = ({"first_name":"Joshua", "last_name":"Drake"},
+                        {"first_name":"Steven", "last_name":"Foo"},
+                        {"first_name":"David", "last_name":"Bar"})
         """
         self.cursor.executemany(query, *args, **kwargs)
 
@@ -66,9 +65,3 @@ class PostgresUtil:
         if self.cursor:
             self.conn.close()
 
-
-if __name__ == '__main__':
-    postgres = PostgresUtil()
-
-    query = "INSERT INTO test_users(handle, name) VALUES ('test', 'test') RETURNING 1"
-    print(postgres.execute(query))

@@ -4,7 +4,7 @@ from ftplib import FTP
 from ftplib import error_perm
 
 
-class Ftp(object):
+class FtpUtil:
 
     def __init__(self,
                  download_path,
@@ -33,11 +33,14 @@ class Ftp(object):
 
         self.ftp.cwd(self.ftp_path)
 
-    def files(self, filename=None):
-        """
-        다운로드 받을 파일 목록
-        :param filename: 다운로드 받을 파일 하나(확장자 포함)
-        :return dict: 파일별 날짜별 데이터
+    def get_files(self, filename=None):
+        """다운로드 받을 파일 목록을 가져온다.
+
+        Parameters:
+            filename (str): 확장자를 포함한 다운로드 받을 파일
+
+        Return:
+            (dict) 파일별 날짜별 데이터
         """
         all_file = self.ftp.nlst()[1:]
 
@@ -55,7 +58,7 @@ class Ftp(object):
         try:
             with open(os.path.join(self.download_path, filename), "wb") as f:
                 self.ftp.retrbinary("RETR " + filename, f.write)
-                print('[DOWNLOAD] %s' % filename)
+                print('Downloaded successfully %s' % filename)
             return True
         except Exception as e:
             traceback.print_exc()

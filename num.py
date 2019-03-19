@@ -84,6 +84,3 @@ def num2valid_digit_str(num, valid_digit=3):
         else:
             num = '%s%s' % ('0', num)
 
-
-if __name__ == '__main__':
-    print(num2valid_digit_str(202, valid_digit=5))

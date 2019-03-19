@@ -38,11 +38,3 @@ def get_match(string, elem='mobile'):
     else:
         return None
 
-
-if __name__ == '__main__':
-    print(remove_first_chars(',,,a,b,c', ','))
-    print(remove_last_chars('a,b,c,,,,', ','))
-
-    numbers = ["010-7324-7942", "017-123-4567", "00-00-0000", "abc-1111-1111"]
-    for number in numbers:
-        print("%s -> %s" % (number, is_correct_by_regex(number, elem='mobile')))

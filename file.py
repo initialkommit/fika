@@ -1,18 +1,13 @@
-import os.path
+import os
 import codecs
 
 import chardet
-import subprocess
-
-from num import to_readable
 
 
-class FileUtil(object):
+class FileUtil:
+    """File-related Helper"""
     def __init__(self, data=None):
         self.data = data
-
-    def __repr__(self):
-        return self.data
 
     def read(self, file_path, is_binary=False):
         self.data = FileUtil.reads(file_path, is_binary)
@@ -30,7 +25,7 @@ class FileUtil(object):
     def encoding(file_path):
         try:
             return chardet.detect(open(file_path).read())['encoding']
-        except:
+        except Exception:
             return None
 
     @staticmethod
@@ -49,46 +44,17 @@ class FileUtil(object):
 
     @staticmethod
     def writes(data, file_path, is_binary=False, encoding='UTF-8'):
-        d = os.path.dirname(file_path)
-        if len(d) > 0 and not os.path.exists(d):
-            os.makedirs(d)
+        directory = os.path.dirname(file_path)
+        if len(directory) > 0 and not os.path.exists(directory):
+            os.makedirs(directory)
+
         if is_binary:
             write_mode = 'wb'
-            if data and len(data) > 0:
+            if data:
                 with open(file_path, mode=write_mode) as f:
                     f.write(data)
         else:  # text data
             write_mode = 'w'
-            if data and len(data) > 0:
+            if data:
                 with codecs.open(file_path, mode=write_mode, encoding=encoding) as f:
                     f.write(data)
-
-    @staticmethod
-    def count_lines(fname):
-        p = subprocess.Popen(['wc', '-l', fname], stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-        result, err = p.communicate()
-        if p.returncode != 0:
-            raise IOError(err)
-        return int(result.strip().split()[0])
-
-    @staticmethod
-    def print_n_write(file, s):
-        print(s)
-        file.write('%s\n' % (s,))
-
-    @staticmethod
-    def to_filename(s):
-        return s.replace('/', '').replace('"', "'")
-
-    @staticmethod
-    def to_filename_from_dict(di, delimeter='_', include=None):
-        if include is None:
-            include = di.keys()
-        return delimeter.join(['{}{}'.format(key.replace(delimeter, ''), to_readable(val)) for key, val in sorted(di.items()) if key in include])
-
-
-if __name__ == '__main__':
-    with open('output/file_test.txt', 'w') as file:
-        FileUtil.print_n_write(file, 'aaa')
-        FileUtil.print_n_write(file, ('a', 'b', 'c'))

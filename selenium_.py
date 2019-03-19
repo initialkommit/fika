@@ -35,16 +35,19 @@ def get_webelement_from_url(driver, url):
     except TimeoutException:
         print('Loading took too much time! so it will be restarting.')
         get_webelement_from_url(driver, url)
+
     return driver
 
 
 def check_exists_by_css_selector(driver, css_selector):
-    """
-    Check only if exists or not
-    :return: True or False
+    """Check whether exists or not
+
+    Return:
+        True or False
     """
     try:
         driver.find_element_by_css_selector(css_selector)
     except NoSuchElementException:
         return False
+
     return True

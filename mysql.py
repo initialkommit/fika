@@ -1,7 +1,7 @@
 import pymysql
 
 
-class MySQL(object):
+class MySQL:
     def __init__(self, host, user, passwd, db, port=3306,
                  charset='UTF8', auto_commit=True, auto_connect=True):
         self.init_command = None

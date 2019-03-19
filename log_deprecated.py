@@ -79,16 +79,16 @@ class LogUtil(object):
                                                 datefmt)
             cls.__log.setLevel(level)
 
-            LogUtil.basigConfig(level, format=format, datefmt=datefmt)
-            logging.getLogger("multiprocessing").setLevel(logging.CRITICAL)
-            logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-            logging.getLogger("requests").setLevel(logging.CRITICAL)
-            logging.getLogger('elasticsearch').setLevel(logging.CRITICAL)
-            logging.getLogger('elasticsearch.trace').setLevel(logging.CRITICAL)
-            logging.getLogger("py2neo").setLevel(logging.CRITICAL)
-            logging.getLogger("py2neo.batch").setLevel(logging.CRITICAL)
-            logging.getLogger("py2neo.cypher").setLevel(logging.CRITICAL)
-            logging.getLogger("httpstream").setLevel(logging.CRITICAL)
+            # LogUtil.basigConfig(level, format=format, datefmt=datefmt)
+            # logging.getLogger("multiprocessing").setLevel(logging.CRITICAL)
+            # logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+            # logging.getLogger("requests").setLevel(logging.CRITICAL)
+            # logging.getLogger('elasticsearch').setLevel(logging.CRITICAL)
+            # logging.getLogger('elasticsearch.trace').setLevel(logging.CRITICAL)
+            # logging.getLogger("py2neo").setLevel(logging.CRITICAL)
+            # logging.getLogger("py2neo.batch").setLevel(logging.CRITICAL)
+            # logging.getLogger("py2neo.cypher").setLevel(logging.CRITICAL)
+            # logging.getLogger("httpstream").setLevel(logging.CRITICAL)
         return cls.__log
 
     @staticmethod
@@ -150,7 +150,7 @@ class LogUtil(object):
                 logging.Formatter(fmt='%(message)s', datefmt=datefmt))
             log.addHandler(_consoleHandler)
 
-            # console logger
+            # console error logger
             _console_errorHandler = logging.StreamHandler(stream=sys.stderr)
             _console_errorHandler.setLevel(logging.ERROR)
             _console_errorHandler.setFormatter(
@@ -177,10 +177,3 @@ class LogUtil(object):
         for h in cls.__log.handlers:
             app.logger.addHandler(h)
         return app.logger
-
-
-if __name__ == '__main__':
-    log = LogUtil.get_logger(sys.argv[0], level=logging.INFO, console_mode=True)
-    log.debug('debug level OK.')
-    log.info('info level OK.')
-    log.error('error level OK.')
